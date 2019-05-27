@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_restful import Api
 from resources.usuario import Usuario, Usuarios, RegistroUsuario, UsuarioLogin
+from resources.personagem import Personagem
 from flask_jwt_extended import JWTManager  # gerencia a autenticação
 
 app = Flask(__name__)
@@ -17,6 +18,7 @@ def criar_banco():
 
 
 api.add_resource(Usuarios, '/usuarios')
+api.add_resource(Personagem, '/personagem/<int:personagem_id>')
 api.add_resource(Usuario, '/usuario/<int:usuario_id>')
 api.add_resource(RegistroUsuario, '/cadastro')
 api.add_resource(UsuarioLogin, '/login')

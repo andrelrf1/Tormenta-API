@@ -18,7 +18,7 @@ atributos.add_argument('desvantagem_id', type=int, required=True, help='O campo 
 atributos.add_argument('usuario_id', type=int, required=True, help='O campo nome não pode estar vasio')
 
 
-class Ficha(Resource):
+class Personagem(Resource):
     def get(self, personagem_id):
         personagem = ModelPersonagem.find_personagem(personagem_id)
         if personagem:
