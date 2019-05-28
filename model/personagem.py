@@ -16,12 +16,8 @@ class Personagem(banco.Model):
     pms = banco.Column(banco.Integer, nullable=True)
     experiencia = banco.Column(banco.Integer, nullable=True)
     dinheiro = banco.Column(banco.DECIMAL(8.2), nullable=True)
-    vantagem_id = banco.Column(banco.Integer, banco.ForeignKey('vantagem.vantagem_id'), nullable=True)
-    desvantagem_id = banco.Column(banco.Integer, banco.ForeignKey("desvantagem.desvantagem_id"), nullable=True)
-    usuario_id = banco.Column(banco.Integer, banco.ForeignKey("usuario.usuario_id"))
 
-    def __init__(self, nome, nivel, forca, habilidade, resistencia, armadura, pdf, pv, pms, experiencia, dinheiro,
-                 vantagem_id, desvantagem_id, usuario_id):
+    def __init__(self, nome, nivel, forca, habilidade, resistencia, armadura, pdf, pv, pms, experiencia, dinheiro):
         self.nome = nome
         self.nivel = nivel
         self.forca = forca
@@ -33,9 +29,6 @@ class Personagem(banco.Model):
         self.pms = pms
         self.experiencia = experiencia
         self.dinheiro = dinheiro
-        self.vantagem_id = vantagem_id
-        self.desvantagem_id = desvantagem_id
-        self.usuario_id = usuario_id
 
     def json(self):
         return {
@@ -50,10 +43,7 @@ class Personagem(banco.Model):
             "pv": self.pv,
             "pms": self.pms,
             "experiencia": self.experiencia,
-            "dinheiro": self.dinheiro,
-            "vantagem_id": self.vantagem_id,
-            "desvantagem_id": self.desvantagem_id,
-            "usuario_id": self.usuario_id
+            "dinheiro": self.dinheiro
         }
 
     @classmethod

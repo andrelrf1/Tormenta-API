@@ -7,7 +7,6 @@ class UsuarioModel(banco.Model):
     usuario_id = banco.Column(banco.Integer, primary_key=True, nullable=False, autoincrement=True)
     nome = banco.Column(banco.Text, nullable=False)
     senha = banco.Column(banco.Text, nullable=False)
-    # personagens = banco.relationship("Personagem", backref="usuario", lazy=True)
 
     def __init__(self, nome, senha):
         self.nome = nome

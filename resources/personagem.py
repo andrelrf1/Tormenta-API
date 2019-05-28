@@ -13,9 +13,9 @@ atributos.add_argument('pv', type=int, required=True, help='O campo nome não po
 atributos.add_argument('pms', type=int, required=True, help='O campo nome não pode estar vasio')
 atributos.add_argument('experiencia', type=int, required=True, help='O campo nome não pode estar vasio')
 atributos.add_argument('dinheiro', type=float, required=True, help='O campo nome não pode estar vasio')
-atributos.add_argument('vantagem_id', type=int, required=True, help='O campo nome não pode estar vasio')
-atributos.add_argument('desvantagem_id', type=int, required=True, help='O campo nome não pode estar vasio')
-atributos.add_argument('usuario_id', type=int, required=True, help='O campo nome não pode estar vasio')
+# atributos.add_argument('vantagem_id', type=int, required=True, help='O campo nome não pode estar vasio')
+# atributos.add_argument('desvantagem_id', type=int, required=True, help='O campo nome não pode estar vasio')
+# atributos.add_argument('usuario_id', type=int, required=True, help='O campo nome não pode estar vasio')
 
 
 class Personagem(Resource):
