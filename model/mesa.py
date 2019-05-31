@@ -9,16 +9,16 @@ class MesaModel(banco.Model):
     nome = banco.Column(banco.Text, nullable=False)
     senha = banco.Column(banco.Text, nullable=False)
 
-    def __init__(self, mesa_id, nome, senha):
-        self.mesa_id = mesa_id
+    def __init__(self, usuario_id, nome, senha):
+        self.usuario_id = usuario_id
         self.nome = nome
         self.senha = senha
 
     def json(self):
-        return {'mesa_id': self.mesa_id, 'usuario_id': self.usuario_id, 'nome': self.nome, 'senha': self.senha}
+        return {'mesa_id': self.mesa_id, 'usuario_id': self.usuario_id, 'nome': self.nome}
 
     @classmethod
-    def procurar_mesa(cls, mesa_id):
+    def find_mesa(cls, mesa_id):
         mesa = cls.query.filter_by(mesa_id=mesa_id).first()
         if mesa:
             return mesa_id

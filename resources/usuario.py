@@ -1,6 +1,6 @@
 from flask_restful import Resource, reqparse
 from model.usuario import UsuarioModel
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, jwt_required
 from werkzeug.security import safe_str_cmp
 
 atributos = reqparse.RequestParser()
@@ -23,6 +23,7 @@ class Usuario(Resource):
 
         return {'message': 'Usuario not found'}
 
+    @jwt_required
     def delete(self, usuario_id):
         usuario = UsuarioModel.find_user(usuario_id)
         if usuario:

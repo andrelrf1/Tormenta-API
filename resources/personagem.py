@@ -1,5 +1,6 @@
 from flask_restful import Resource, reqparse
 from model.personagem import Personagem as ModelPersonagem
+from flask_jwt_extended import jwt_required
 
 atributos = reqparse.RequestParser()
 atributos.add_argument('usuario_id', type=int, required=True, help='O campo usuario_id não pode estar vazio')
@@ -22,6 +23,7 @@ class Personagens(Resource):
 
 
 class Personagem(Resource):
+    @jwt_required
     def get(self, personagem_id):
         personagem = ModelPersonagem.find_personagem(personagem_id)
         if personagem:
@@ -29,6 +31,7 @@ class Personagem(Resource):
 
         return {'message': 'Personagem not found'}
 
+    @jwt_required
     def delete(self, personagem_id):
         personagem = ModelPersonagem.find_personagem(personagem_id)
         if personagem:
@@ -39,6 +42,7 @@ class Personagem(Resource):
 
 
 class CreatePersonagem(Resource):
+    @jwt_required
     def post(self):
         dados = atributos.parse_args()
         personagem = ModelPersonagem(**dados)
