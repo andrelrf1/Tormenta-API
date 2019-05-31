@@ -1,17 +1,29 @@
 import os
-from flask import Flask
+from flask import Flask, jsonify
 from flask_restful import Api
-from resources.usuario import Usuario, Usuarios, RegistroUsuario, UsuarioLogin
+from resources.usuario import Usuario, Usuarios, RegistroUsuario, UsuarioLogin, UsuarioLogout
 from resources.personagem import Personagem, Personagens, CreatePersonagem
 from resources.mesa import Mesa, Mesas, CreateMesa
 from flask_jwt_extended import JWTManager  # gerencia a autenticação
+from blacklist import BLACKLIST
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///banco.db'  # configuração para criação e conexão do banco
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = 'DontTellAnyone'  # chave
+app.config['JWT_BLACKLIST_ENABLED'] = True
 api = Api(app)
 jwt = JWTManager(app)
+
+
+@jwt.token_in_blacklist_loader
+def verifica_blacklist(token):
+    return token['jti'] in BLACKLIST
+
+
+@jwt.revoked_token_loader
+def token_deacesso_invalidado():
+    return jsonify({'messade': 'you have been logged iut'}), 401
 
 
 @app.before_first_request
@@ -29,6 +41,7 @@ api.add_resource(CreateMesa, '/criarMesa')
 api.add_resource(RegistroUsuario, '/cadastro')
 api.add_resource(CreatePersonagem, '/criarPersonagem')
 api.add_resource(UsuarioLogin, '/login')
+api.add_resource(UsuarioLogout, '/logout')
 
 if __name__ == "__main__":
     from sql_alchemy import banco

@@ -1,7 +1,8 @@
 from flask_restful import Resource, reqparse
 from model.usuario import UsuarioModel
-from flask_jwt_extended import create_access_token, jwt_required
+from flask_jwt_extended import create_access_token, jwt_required, get_raw_jwt
 from werkzeug.security import safe_str_cmp
+from blacklist import BLACKLIST
 
 atributos = reqparse.RequestParser()
 atributos.add_argument('nome', type=str, required=True, help="O campo não pode ser deixado em branco")
@@ -58,3 +59,11 @@ class UsuarioLogin(Resource):
             return {'access_token': token_de_acesso}, 200
 
         return {'message': 'Usuario e senha incorretos'}, 401  # Unauthorize
+
+
+class UsuarioLogout(Resource):
+    @jwt_required
+    def post(self):
+        jwt_id = get_raw_jwt()['jti']  # j de JWT, t de token e i de identifier
+        BLACKLIST.add(jwt_id)
+        return {'message': 'Logged out successfully'}, 200
