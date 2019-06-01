@@ -2,8 +2,8 @@ import os
 from flask import Flask, jsonify
 from flask_restful import Api
 from resources.usuario import Usuario, Usuarios, RegistroUsuario, UsuarioLogin, UsuarioLogout
-from resources.personagem import Personagem, Personagens, CreatePersonagem
-from resources.mesa import Mesa, Mesas, CreateMesa
+from resources.personagem import Personagem, Personagens, CreatePersonagem, PersonagensUsuario
+from resources.mesa import Mesa, Mesas, CreateMesa, MesasPersonagens
 from flask_jwt_extended import JWTManager  # gerencia a autenticação
 from blacklist import BLACKLIST
 
@@ -42,6 +42,8 @@ api.add_resource(RegistroUsuario, '/cadastro')
 api.add_resource(CreatePersonagem, '/criarPersonagem')
 api.add_resource(UsuarioLogin, '/login')
 api.add_resource(UsuarioLogout, '/logout')
+api.add_resource(PersonagensUsuario, '/getPersonagens/<int:usuario_id>')
+api.add_resource(MesasPersonagens, '/getMesas/<int:usuario_id>')
 
 if __name__ == "__main__":
     from sql_alchemy import banco

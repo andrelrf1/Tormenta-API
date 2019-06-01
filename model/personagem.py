@@ -18,7 +18,8 @@ class Personagem(banco.Model):
     experiencia = banco.Column(banco.Integer, nullable=True)
     dinheiro = banco.Column(banco.Float(8.2), nullable=True)
 
-    def __init__(self, nome, usuario_id, nivel, forca, habilidade, resistencia, armadura, pdf, pv, pms, experiencia, dinheiro):
+    def __init__(self, nome, usuario_id, nivel, forca, habilidade, resistencia, armadura, pdf, pv, pms, experiencia,
+                 dinheiro):
         self.nome = nome
         self.usuario_id = usuario_id
         self.nivel = nivel
@@ -62,6 +63,14 @@ class Personagem(banco.Model):
         personagem = cls.query.filter_by(nome=nome).first()
         if personagem:
             return personagem
+
+        return None
+
+    @classmethod
+    def find_by_user_id(cls, usuario_id):
+        personagens = cls.query.filter_by(usuario_id=usuario_id).all()
+        if personagens:
+            return personagens
 
         return None
 

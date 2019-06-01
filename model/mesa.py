@@ -21,7 +21,15 @@ class MesaModel(banco.Model):
     def find_mesa(cls, mesa_id):
         mesa = cls.query.filter_by(mesa_id=mesa_id).first()
         if mesa:
-            return mesa_id
+            return mesa
+
+        return None
+
+    @classmethod
+    def find_by_user_id(cls, usuario_id):
+        mesas = cls.query.filter_by(usuario_id=usuario_id).all()
+        if mesas:
+            return mesas
 
         return None
 
