@@ -2,7 +2,7 @@ from sql_alchemy import banco
 
 
 class MesaModel(banco.Model):
-    __tablename__ = "mesas"
+    __tablename__ = "mesa"
 
     mesa_id = banco.Column(banco.Integer, primary_key=True, nullable=False, autoincrement=True)
     usuario_id = banco.Column(banco.Integer, banco.ForeignKey('usuario.usuario_id'))

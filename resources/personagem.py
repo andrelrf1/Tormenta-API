@@ -1,6 +1,6 @@
 from flask_restful import Resource, reqparse
 from model.personagem import Personagem as ModelPersonagem
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
 import sqlite3
 
 # path /personagem?nome=coisa&forca=100&magia=1000
@@ -24,9 +24,14 @@ atributos.add_argument('dinheiro', type=float, required=True, help='O campo nome
 
 class PersonagensUsuario(Resource):
     @jwt_required
-    def get(self, usuario_id):
-        return {'personagens': [personagem.json() for personagem in
-                                ModelPersonagem.find_by_user_id(usuario_id=usuario_id)]}
+    def get(self):
+        usuario_id = get_jwt_identity()
+        try:
+            return {'personagens': [personagem.json() for personagem in
+                                    ModelPersonagem.find_by_user_id(usuario_id=usuario_id)]}
+
+        except TypeError:
+            return {'message': 'Sem personagens criados.'}
 
 
 class Personagens(Resource):
