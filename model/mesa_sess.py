@@ -4,6 +4,7 @@ from sql_alchemy import banco
 class ModelMesaSessao(banco.Model):
     __tablename__ = 'mesasessao'
 
+    mesa_sess_id = banco.Column(banco.Integer, primary_key=True, autoincrement=True, unique=True)
     data_sess = banco.Column(banco.DateTime, nullable=False)
     sessao_id = banco.Column(banco.Integer, banco.ForeignKey('sessao.sessao_id'))
     mesa_id = banco.Column(banco.Integer, banco.ForeignKey('mesa.mesa_id'))
