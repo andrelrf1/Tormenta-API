@@ -7,6 +7,7 @@ from resources.mesa import Mesa, Mesas, CreateMesa, MesasPersonagens
 from resources.mesapart import MesaPart, CreateMesaPart
 from resources.sessao import Sessao, CreateSessao
 from resources.mesa_sess import MesaSess
+from resources.mesa_login import MesaLogin
 from flask_jwt_extended import JWTManager  # gerencia a autenticação
 from blacklist import BLACKLIST
 
@@ -34,27 +35,28 @@ def criar_banco():
     banco.create_all()
 
 
-api.add_resource(Usuarios, '/usuarios')
+api.add_resource(Usuarios, '/usuario/all')
 api.add_resource(Usuario, '/usuario/<int:usuario_id>')
-api.add_resource(UsuarioLogin, '/login')
-api.add_resource(UsuarioLogout, '/logout')
+api.add_resource(UsuarioLogin, '/usuario/login')
+api.add_resource(UsuarioLogout, '/usuario/logout')
 
 api.add_resource(Personagem, '/personagem/<int:personagem_id>')
-api.add_resource(Personagens, '/personagens')
-api.add_resource(CreatePersonagem, '/criarPersonagem')
+api.add_resource(Personagens, '/personagem/all')
+api.add_resource(CreatePersonagem, '/personagem/criar')
 api.add_resource(RegistroUsuario, '/cadastro')
-api.add_resource(PersonagensUsuario, '/getPersonagens')
+api.add_resource(PersonagensUsuario, '/personagem/get')
 
-api.add_resource(Mesas, '/mesas')
+api.add_resource(Mesas, '/mesa')
 api.add_resource(Mesa, '/mesa/<int:mesa_id>')
-api.add_resource(CreateMesa, '/criarMesa')
-api.add_resource(MesasPersonagens, '/getMesas/<int:usuario_id>')
+api.add_resource(CreateMesa, '/mesa/criar')
+api.add_resource(MesasPersonagens, '/mesa/get/<int:usuario_id>')
+api.add_resource(MesaLogin, '/mesa/login')
 
 api.add_resource(MesaPart, '/mesapart/<int:mesa_id>')
-api.add_resource(CreateMesaPart, '/createMesaPart')
+api.add_resource(CreateMesaPart, '/mesapart/create')
 
 api.add_resource(Sessao, '/sessao/<int:mesa_id>')
-api.add_resource(CreateSessao, '/createSessao')
+api.add_resource(CreateSessao, '/sessao/create')
 
 api.add_resource(MesaSess, '/mesaSessao')
 

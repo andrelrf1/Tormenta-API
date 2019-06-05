@@ -1,9 +1,7 @@
 from flask_restful import Resource, reqparse
 from model.mesa import MesaModel
-from flask_jwt_extended import jwt_required, get_jwt_identity
-
-parametros = reqparse.RequestParser()
-parametros.add_argument('usuario_id', type=int)
+from flask_jwt_extended import jwt_required, get_jwt_identity, create_refresh_token
+from werkzeug.security import safe_str_cmp
 
 atributos = reqparse.RequestParser()
 # atributos.add_argument('usuario_id', type=int, help='O campo usuario_id não pode ficar vazio')
@@ -31,6 +29,7 @@ class Mesas(Resource):
 
 
 class Mesa(Resource):
+    @jwt_required
     def get(self, mesa_id):
         mesa = MesaModel.find_mesa(mesa_id)
         if mesa:
@@ -57,3 +56,16 @@ class CreateMesa(Resource):
         mesa.salvar_mesa()
 
         return {'message': 'Mesa criada'}
+
+
+class MesaLogin(Resource):
+    @jwt_required
+    def post(self, mesa_id, senha):
+        mesa = Mesa().get(mesa_id)
+
+        if mesa and safe_str_cmp(mesa['senha'], senha):
+            usuario_id = get_jwt_identity()
+            refresh_token = create_refresh_token(identity=usuario_id)
+            return {'refresh_token': refresh_token}, 200
+
+        return {'message': 'Senha incorreta'}

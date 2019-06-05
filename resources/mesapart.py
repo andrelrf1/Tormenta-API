@@ -1,6 +1,6 @@
 from flask_restful import Resource, reqparse
 from model.mesapart import ModelMesaPart
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required, get_jwt_identity, jwt_refresh_token_required
 import time
 
 atributos = reqparse.RequestParser()
@@ -14,7 +14,7 @@ atributos.add_argument('sts_pers')
 
 class MesaPart(Resource):
 
-    @jwt_required
+    @jwt_refresh_token_required
     def get(self, mesa_id):  # Mostrar partidas relacionadas a mesa em questão
         try:
             return {'mesapart': [mesapart.json() for mesapart in ModelMesaPart.find_by_mesa_id(mesa_id)]}
@@ -22,7 +22,7 @@ class MesaPart(Resource):
         except TypeError:
             return {'message': 'Sem partidas recentes'}
 
-    @jwt_required
+    @jwt_refresh_token_required
     def delete(self, mesa_id):  # apagar a relação partida
         for mesapart in ModelMesaPart.find_by_mesa_id(mesa_id=mesa_id):
             mesapart.delete()
@@ -31,7 +31,7 @@ class MesaPart(Resource):
 
 
 class CreateMesaPart(Resource):
-    @jwt_required
+    @jwt_refresh_token_required
     def post(self):
         dados = atributos.parse_args()
         dados['ent_part'], dados['ini_mesa'] = time.strftime('%d/%m/%y %H:%M:%S'), time.strftime('%d/%m/%y %H:%M:%S')

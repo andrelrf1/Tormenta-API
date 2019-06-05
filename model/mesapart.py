@@ -53,6 +53,14 @@ class ModelMesaPart(banco.Model):
 
         return None
 
+    @classmethod
+    def find_by_usuario_id(cls, usuario_id):
+        mesapart = cls.query.filter_by(usuario_id=usuario_id).all()
+        if mesapart:
+            return mesapart
+
+        return None
+
     def salvar_mesapart(self):
         banco.session.add(self)
         banco.session.commit()
