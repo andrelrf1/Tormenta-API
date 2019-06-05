@@ -13,13 +13,15 @@ class Personagem(banco.Model):
     resistencia = banco.Column(banco.Integer, nullable=True)
     armadura = banco.Column(banco.Integer, nullable=True)
     pdf = banco.Column(banco.Integer, nullable=True)
-    pv = banco.Column(banco.Integer, nullable=True)
-    pms = banco.Column(banco.Integer, nullable=True)
     experiencia = banco.Column(banco.Integer, nullable=True)
-    dinheiro = banco.Column(banco.Float(8.2), nullable=True)
+    dinheiro = banco.Column(banco.Integer, nullable=True)
+    pvs = banco.Column(banco.Integer, nullable=True)
+    pms = banco.Column(banco.Integer, nullable=True)
+    dano = banco.Column(banco.Integer, nullable=True)
+    pms_gasto = banco.Column(banco.Integer, nullable=True)
 
-    def __init__(self, nome, usuario_id, nivel, forca, habilidade, resistencia, armadura, pdf, pv, pms, experiencia,
-                 dinheiro):
+    def __init__(self, nome, usuario_id, nivel, forca, habilidade, resistencia, armadura, pdf, expereienia, dinheiro,
+                 pvs, pms, dano, pms_gato):
         self.nome = nome
         self.usuario_id = usuario_id
         self.nivel = nivel
@@ -28,10 +30,12 @@ class Personagem(banco.Model):
         self.resistencia = resistencia
         self.armadura = armadura
         self.pdf = pdf
-        self.pv = pv
-        self.pms = pms
-        self.experiencia = experiencia
+        self.experiencia = expereienia
         self.dinheiro = dinheiro
+        self.pvs = pvs
+        self.pms = pms
+        self.dano = dano
+        self.pms_gasto = pms_gato
 
     def json(self):
         return {
@@ -44,10 +48,12 @@ class Personagem(banco.Model):
             "resistencia": self.resistencia,
             "armadura": self.armadura,
             "pdf": self.pdf,
-            "pv": self.pv,
-            "pms": self.pms,
             "experiencia": self.experiencia,
-            "dinheiro": self.dinheiro
+            "dinheiro": self.dinheiro,
+            "pvs": self.pvs,
+            "pms": self.pms,
+            "dano": self.dano,
+            "pms_gasto": self.pms_gasto
         }
 
     @classmethod

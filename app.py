@@ -4,8 +4,9 @@ from flask_restful import Api
 from resources.usuario import Usuario, Usuarios, RegistroUsuario, UsuarioLogin, UsuarioLogout
 from resources.personagem import Personagem, Personagens, CreatePersonagem, PersonagensUsuario
 from resources.mesa import Mesa, Mesas, CreateMesa, MesasPersonagens
-from resources.mesapart import MesaPart
-from resources.historico import CreateHistorico, Historico
+from resources.mesapart import MesaPart, CreateMesaPart
+from resources.sessao import Sessao, CreateSessao
+from resources.mesa_sess import MesaSess
 from flask_jwt_extended import JWTManager  # gerencia a autenticação
 from blacklist import BLACKLIST
 
@@ -34,21 +35,28 @@ def criar_banco():
 
 
 api.add_resource(Usuarios, '/usuarios')
-api.add_resource(Personagens, '/personagens')
-api.add_resource(Mesas, '/mesas')
-api.add_resource(Mesa, '/mesa/<int:mesa_id>')
-api.add_resource(Personagem, '/personagem/<int:personagem_id>')
 api.add_resource(Usuario, '/usuario/<int:usuario_id>')
-api.add_resource(CreateMesa, '/criarMesa')
-api.add_resource(RegistroUsuario, '/cadastro')
-api.add_resource(CreatePersonagem, '/criarPersonagem')
 api.add_resource(UsuarioLogin, '/login')
 api.add_resource(UsuarioLogout, '/logout')
+
+api.add_resource(Personagem, '/personagem/<int:personagem_id>')
+api.add_resource(Personagens, '/personagens')
+api.add_resource(CreatePersonagem, '/criarPersonagem')
+api.add_resource(RegistroUsuario, '/cadastro')
 api.add_resource(PersonagensUsuario, '/getPersonagens')
+
+api.add_resource(Mesas, '/mesas')
+api.add_resource(Mesa, '/mesa/<int:mesa_id>')
+api.add_resource(CreateMesa, '/criarMesa')
 api.add_resource(MesasPersonagens, '/getMesas/<int:usuario_id>')
+
 api.add_resource(MesaPart, '/mesapart/<int:mesa_id>')
-api.add_resource(CreateHistorico, '/criarHistorico')
-api.add_resource(Historico, '/historico/<int:mesa_id>')
+api.add_resource(CreateMesaPart, '/createMesaPart')
+
+api.add_resource(Sessao, '/sessao/<int:mesa_id>')
+api.add_resource(CreateSessao, '/createSessao')
+
+api.add_resource(MesaSess, '/mesaSessao')
 
 if __name__ == "__main__":
     from sql_alchemy import banco

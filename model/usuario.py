@@ -13,7 +13,10 @@ class UsuarioModel(banco.Model):
         self.senha = senha
 
     def json(self):
-        return {"usuario_id": self.usuario_id, "nome": self.nome}
+        return {
+            "usuario_id": self.usuario_id,
+            "nome": self.nome,
+        }
 
     @classmethod
     def find_user(cls, usuario_id):

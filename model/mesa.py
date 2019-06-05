@@ -8,14 +8,27 @@ class MesaModel(banco.Model):
     usuario_id = banco.Column(banco.Integer, banco.ForeignKey('usuario.usuario_id'))
     nome = banco.Column(banco.Text, nullable=False)
     senha = banco.Column(banco.Text, nullable=False)
+    tp_part = banco.Column(banco.VARCHAR(10), nullable=False)
+    sts_part = banco.Column(banco.VARCHAR(10))
+    sts_pers = banco.Column(banco.VARCHAR(5))
 
-    def __init__(self, usuario_id, nome, senha):
+    def __init__(self, usuario_id, nome, senha, tp_part, sts_part, sts_pers):
         self.usuario_id = usuario_id
         self.nome = nome
         self.senha = senha
+        self.tp_part = tp_part
+        self.sts_part = sts_part
+        self.sts_pers = sts_pers
 
     def json(self):
-        return {'mesa_id': self.mesa_id, 'usuario_id': self.usuario_id, 'nome': self.nome}
+        return {
+            'usuario_id': self.usuario_id,
+            'mesa_id': self.mesa_id,
+            'nome': self.nome,
+            'tp_part': self.tp_part,
+            'sts_part': self.sts_part,
+            'sts_pers': self.sts_pers
+        }
 
     @classmethod
     def find_mesa(cls, mesa_id):

@@ -6,9 +6,12 @@ parametros = reqparse.RequestParser()
 parametros.add_argument('usuario_id', type=int)
 
 atributos = reqparse.RequestParser()
-atributos.add_argument('usuario_id', type=int, help='O campo usuario_id não pode ficar vazio')
+# atributos.add_argument('usuario_id', type=int, help='O campo usuario_id não pode ficar vazio')
 atributos.add_argument('nome', type=str, help='O campo nome não pode ficar vazio')
 atributos.add_argument('senha', type=str, help='O campo senha não pode estar vazio')
+atributos.add_argument('tp_part', type=str, help='')
+atributos.add_argument('sts_part', type=str, help='')
+atributos.add_argument('sts_pers', type=str, help='')
 
 
 class MesasPersonagens(Resource):
@@ -49,6 +52,7 @@ class CreateMesa(Resource):
     @jwt_required
     def post(self):
         dados = atributos.parse_args()
+        dados['usuario_id'] = get_jwt_identity()
         mesa = MesaModel(**dados)
         mesa.salvar_mesa()
 
